@@ -26,6 +26,11 @@ previous_error = 0
 integral = 0
 previous_time = time.time()
 
+cross_count = 0
+t_junction_count = 0
+l_junction_left_count = 0
+l_junction_right_count = 0
+
 
 # Setup GPIO mode
 GPIO.setmode(GPIO.BCM)
@@ -71,7 +76,3 @@ servos = {
 for pin in servos.values():
     GPIO.setup(pin, GPIO.OUT)
 
-# Set up PWM channels with a frequency of 50Hz
-pwm = {name: GPIO.PWM(pin, 50) for name, pin in servos.items()}
-for p in pwm.values():
-    p.start(0)

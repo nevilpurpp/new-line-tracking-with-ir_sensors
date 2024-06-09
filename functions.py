@@ -158,36 +158,34 @@ def forward_cross(c):
 
 
 def right_turn():
-    # Make a right turn based on sensor readings
     while True:
         sensor_values = sensor_readings()
-        if all(value == 1 for value in sensor_values):  # Junction detected
+        if sensor_values[1] == 1 and sensor_values[2] == 1 and sensor_values[3] == 1:  # T junction detected
+            print("T junction detected")
             stop()
-            time.sleep(0.1)
-            # Move forward a bit before turning
-            move_forward()
-            set_speed(BASE_SPEED, BASE_SPEED)
-            time.sleep(0.5)
-            stop()
-            time.sleep(0.1)
-            # Execute right turn
-            GPIO.output(IN1, GPIO.HIGH)
-            GPIO.output(IN2, GPIO.LOW)
-            GPIO.output(IN3, GPIO.LOW)
-            GPIO.output(IN4, GPIO.HIGH)
-            set_speed(BASE_SPEED, BASE_SPEED)
-            time.sleep(0.5)  # Adjust the sleep time based on your turn requirement
-            stop()
-            break
-        elif sensor_values == [0, 0, 1, 1, 1]:  # Example condition for turning right
-            GPIO.output(IN1, GPIO.HIGH)
-            GPIO.output(IN2, GPIO.LOW)
-            GPIO.output(IN3, GPIO.LOW)
-            GPIO.output(IN4, GPIO.HIGH)
-            set_speed(BASE_SPEED, BASE_SPEED)
-            time.sleep(0.5)  # Adjust the sleep time based on your turn requirement
-            stop()
-            break
+            time.sleep(0.1)  # Small delay to ensure the robot has stopped
+            
+            t_junction_count += 1
+            if t_junction_count == 1:
+                print("First T junction, making a right turn")
+                
+                # Stop the right wheel and move the left wheel
+                GPIO.output(IN1, GPIO.LOW)  # Right wheel
+                GPIO.output(IN2, GPIO.LOW)
+                GPIO.output(IN3, GPIO.LOW)  # Left wheel forward
+                GPIO.output(IN4, GPIO.HIGH)
+                pwmB.ChangeDutyCycle(0)  # Stop right wheel
+                pwmA.ChangeDutyCycle(BASE_SPEED)  # Move left wheel
+                
+                # Continue moving left wheel until the middle sensors detect the white line
+                while True:
+                    sensor_values = sensor_readings()
+                    if sensor_values[2] == 0 and sensor_values[3] == 1:  # Middle sensors detect white line
+                        stop()
+                        break
+                break
+
+
 
 def left_turn():
     # Make a left turn based on sensor readings
@@ -231,4 +229,7 @@ def reverse():
     GPIO.output(IN4, GPIO.LOW)
 
 
-  
+#right turn
+""""
+   
+"""
