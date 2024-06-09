@@ -26,7 +26,7 @@ previous_error = 0
 integral = 0
 previous_time = time.time()
 
-'''
+
 # Setup GPIO mode
 GPIO.setmode(GPIO.BCM)
 
@@ -50,4 +50,28 @@ pwmA = GPIO.PWM(ENA, 1000)  # 100 Hz frequency
 pwmB = GPIO.PWM(ENB, 1000)  # 100 Hz frequency
 pwmA.start(0)  # Start PWM with 0% duty cycle
 pwmB.start(0)  # Start PWM with 0% duty cycle
-'''
+
+# Define the GPIO pins for TRIG and ECHO
+TRIG = 25
+ECHO = 26
+
+# Set up the TRIG as output and ECHO as input
+GPIO.setup(TRIG, GPIO.OUT)
+GPIO.setup(ECHO, GPIO.IN)
+
+# Define servo pins
+servos = {
+    "base":4 ,
+    "shoulder": 16,
+    "elbow":21 ,
+    "wrist": 7,
+    "gripper": 8
+}
+# Set up servo pins
+for pin in servos.values():
+    GPIO.setup(pin, GPIO.OUT)
+
+# Set up PWM channels with a frequency of 50Hz
+pwm = {name: GPIO.PWM(pin, 50) for name, pin in servos.items()}
+for p in pwm.values():
+    p.start(0)
