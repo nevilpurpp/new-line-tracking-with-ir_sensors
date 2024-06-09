@@ -28,7 +28,7 @@ def pick_object():
     set_servo_angle("wrist", 90)     # Adjust wrist to lift the object
 
     time.sleep(1)  # Wait for the arm to stabilize
-    
+
 def place_object():
     set_servo_angle("base", 0)       # Rotate base to the target position
     set_servo_angle("shoulder", 45)  # Move shoulder down to place the object
@@ -225,6 +225,10 @@ def left_turn():
 def reverse():
     """
     this function implements a reverse logic"""
+    GPIO.output(IN1, GPIO.HIGH
+    GPIO.output(IN2, GPIO.LOW)
+    GPIO.output(IN3, GPIO.HIGH)
+    GPIO.output(IN4, GPIO.LOW)
 
 
   
