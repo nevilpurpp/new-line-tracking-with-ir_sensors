@@ -2,6 +2,7 @@ import RPi.GPIO as GPIO
 import time  
 from functions import *
 from definitions import *
+from functions import right_turn
 
 def main():
     try:

@@ -160,7 +160,7 @@ def forward_cross(c):
 def right_turn():
     while True:
         sensor_values = sensor_readings()
-        if sensor_values[1] == 1 and sensor_values[2] == 1 and sensor_values[3] == 1:  # T junction detected
+        if all(value == 1 for value in sensor_values):    # T junction detected
             print("T junction detected")
             stop()
             time.sleep(0.1)  # Small delay to ensure the robot has stopped
