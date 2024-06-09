@@ -25,6 +25,8 @@ BASE_SPEED = 50  # Base speed for motors (0 to 100)
 previous_error = 0
 integral = 0
 previous_time = time.time()
+
+'''
 # Setup GPIO mode
 GPIO.setmode(GPIO.BCM)
 
@@ -48,3 +50,4 @@ pwmA = GPIO.PWM(ENA, 1000)  # 100 Hz frequency
 pwmB = GPIO.PWM(ENB, 1000)  # 100 Hz frequency
 pwmA.start(0)  # Start PWM with 0% duty cycle
 pwmB.start(0)  # Start PWM with 0% duty cycle
+'''
